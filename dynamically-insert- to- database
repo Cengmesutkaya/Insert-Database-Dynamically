@@ -1,7 +1,7 @@
  if (itemTranslationDefinition != null)
                 {
-                    string assemblyName = "LCW.DTS.Data";
-                    string entityNameSpace = "LCW.DTS.Data.Entities";
+                    string assemblyName = "ProjectName.Data";
+                    string entityNameSpace = "ProjectName.Data.Entities";
                     Assembly asm = Assembly.Load(assemblyName);
                     var entityName = itemTranslationDefinition.DbTableName.Substring(itemTranslationDefinition.DbTableName.LastIndexOf('_') + 1);
                     Type entitylocale = asm.GetType(entityNameSpace + "." + entityName);
