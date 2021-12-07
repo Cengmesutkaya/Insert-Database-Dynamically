@@ -1,0 +1,19 @@
+ if (itemTranslationDefinition != null)
+                {
+                    string assemblyName = "LCW.DTS.Data";
+                    string entityNameSpace = "LCW.DTS.Data.Entities";
+                    Assembly asm = Assembly.Load(assemblyName);
+                    var entityName = itemTranslationDefinition.DbTableName.Substring(itemTranslationDefinition.DbTableName.LastIndexOf('_') + 1);
+                    Type entitylocale = asm.GetType(entityNameSpace + "." + entityName);
+                    var newItemTranslation = Activator.CreateInstance(entitylocale);
+                    var repositorylocaleInstance = uow.GetType().GetProperty(entityName + "Repository").GetValue(uow);                   
+                    
+                    uow.CreateNewTransaction();
+                    MethodInfo insertMethod = repositorylocaleInstance.GetType().GetMethod("PrepareInsert");
+                    newItemTranslation.GetType().GetProperty("TypeRef").SetValue(newItemTranslation, item.TypeRef);
+                    newItemTranslation.GetType().GetProperty("LanguageRef").SetValue(newItemTranslation, item.LanguageRef);
+                    newItemTranslation.GetType().GetProperty("Value").SetValue(newItemTranslation, item.Value);
+                    insertMethod.Invoke(repositorylocaleInstance, new object[] { newItemTranslation });
+                    uow.Commit();
+                    uow.CommitTransaction();
+                }
