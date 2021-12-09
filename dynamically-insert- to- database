@@ -14,6 +14,7 @@
                     newItemTranslation.GetType().GetProperty("LanguageRef").SetValue(newItemTranslation, item.LanguageRef);
                     newItemTranslation.GetType().GetProperty("Value").SetValue(newItemTranslation, item.Value);
                     insertMethod.Invoke(repositorylocaleInstance, new object[] { newItemTranslation });
+                    
                     uow.Commit();
                     uow.CommitTransaction();
                 }
